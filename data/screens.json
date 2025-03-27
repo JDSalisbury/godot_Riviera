@@ -1,0 +1,26 @@
+{
+  "start": {
+	"background": "res://assets/backgrounds/stairway.png",
+	"triggers": {
+	  "right": {
+		"message": "You ascend to the glowing landing.",
+		"next_screen": "landing"
+	  },
+	  "inspect": {
+		"message": "You found an inscription etched into the stone."
+	  }
+	}
+  },
+  "landing": {
+	"background": "res://assets/backgrounds/landing.png",
+	"triggers": {
+	  "left": {
+		"message": "You descend the staircase back to the beginning.",
+		"next_screen": "start"
+	  },
+	  "inspect": {
+		"message": "You notice cracks in the celestial wall..."
+	  }
+	}
+  }
+}

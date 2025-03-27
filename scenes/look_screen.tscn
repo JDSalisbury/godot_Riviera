@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbhmdadrbi7jp"]
 
 [ext_resource type="Script" path="res://scripts/look_mode.gd" id="1_v67vj"]
-[ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/introstairway.png" id="2_uduft"]
+[ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/stairway.png" id="2_uduft"]
 [ext_resource type="PackedScene" uid="uid://bgcd6ws0ujfge" path="res://ui/dialog_box.tscn" id="3_rbmg6"]
 
 [node name="LookScreen" type="Control"]
