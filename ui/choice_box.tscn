@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dmpjsmvn5molj"]
+
+[node name="ChoiceBox" type="Node2D"]

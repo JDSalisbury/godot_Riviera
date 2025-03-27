@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbhmdadrbi7jp"]
+
+[ext_resource type="Script" path="res://scripts/look_mode.gd" id="1_v67vj"]
+[ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/introstairway.png" id="2_uduft"]
+[ext_resource type="PackedScene" uid="uid://bgcd6ws0ujfge" path="res://ui/dialog_box.tscn" id="3_rbmg6"]
+
+[node name="LookScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v67vj")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_uduft")
+
+[node name="TriggerButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -211.0
+offset_right = 143.0
+offset_bottom = 1.0
+grow_vertical = 0
+
+[node name="LeftButton" type="Button" parent="TriggerButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "← Left "
+
+[node name="RightButton" type="Button" parent="TriggerButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = " → Right "
+
+[node name="UpButton" type="Button" parent="TriggerButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = " ↑ Up"
+
+[node name="InspectButton" type="Button" parent="TriggerButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "⊕ Inspect"
+
+[node name="DialogBox" parent="." instance=ExtResource("3_rbmg6")]

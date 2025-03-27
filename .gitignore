@@ -1,0 +1,15 @@
+# Godot-specific
+.import/
+.export/
+.godot/
+*.import
+*.tmp
+*.log
+*.translation
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optional if you use builds
+build/
