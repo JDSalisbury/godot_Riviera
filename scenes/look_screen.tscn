@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbhmdadrbi7jp"]
+[gd_scene load_steps=5 format=3 uid="uid://bbhmdadrbi7jp"]
 
 [ext_resource type="Script" path="res://scripts/look_mode.gd" id="1_v67vj"]
 [ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/stairway.png" id="2_uduft"]
 [ext_resource type="PackedScene" uid="uid://bgcd6ws0ujfge" path="res://ui/dialog_box.tscn" id="3_rbmg6"]
+[ext_resource type="PackedScene" uid="uid://dmpjsmvn5molj" path="res://ui/choice_box.tscn" id="4_m202n"]
 
 [node name="LookScreen" type="Control"]
 layout_mode = 3
@@ -57,3 +58,6 @@ theme_override_font_sizes/font_size = 30
 text = "⊕ Inspect"
 
 [node name="DialogBox" parent="." instance=ExtResource("3_rbmg6")]
+
+[node name="ChoiceBox" parent="." instance=ExtResource("4_m202n")]
+position = Vector2(499, 416)

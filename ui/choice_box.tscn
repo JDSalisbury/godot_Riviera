@@ -1,3 +1,32 @@
-[gd_scene format=3 uid="uid://dmpjsmvn5molj"]
+[gd_scene load_steps=3 format=3 uid="uid://dmpjsmvn5molj"]
 
-[node name="ChoiceBox" type="Node2D"]
+[ext_resource type="Script" path="res://scripts/choice_box.gd" id="1_egy1a"]
+
+[sub_resource type="Theme" id="Theme_56hyh"]
+Button/font_sizes/font_size = 30
+
+[node name="ChoiceBox" type="CanvasLayer"]
+script = ExtResource("1_egy1a")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_56hyh")
+
+[node name="MainMessage" type="Label" parent="Panel"]
+layout_mode = 1
+offset_left = 32.0
+offset_top = -478.0
+offset_right = 33.0
+offset_bottom = -423.0
+theme_override_font_sizes/font_size = 40
+
+[node name="OptionsList" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 8

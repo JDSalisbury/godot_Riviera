@@ -7,7 +7,17 @@
 				"next_screen": "landing"
 			},
 			"inspect": {
-				"message": "You found an inscription etched into the stone."
+				"message": "You see several markings. What will you examine?",
+				"options": [
+					{
+						"label": "Inspect the crystal symbol",
+						"message": "It pulses faintly with heat."
+					},
+					{
+						"label": "Inspect the ancient runes",
+						"message": "They're written in a lost celestial script."
+					}
+				]
 			}
 		}
 	},

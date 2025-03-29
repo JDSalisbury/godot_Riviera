@@ -1,7 +1,7 @@
 extends Control
 
-var screens = {}               # Loaded from screens.json
-var current_screen = "start"   # Initial screen
+var screens = {} # Loaded from screens.json
+var current_screen = "start" # Initial screen
 
 # Load and connect buttons on ready
 func _ready():
@@ -34,6 +34,7 @@ func load_screen(screen_name: String):
 		push_error("Unknown screen: " + screen_name)
 		return
 
+
 	current_screen = screen_name
 	var data = screens[screen_name]
 
@@ -57,9 +58,24 @@ func handle_trigger(direction: String):
 	var screen_data = screens.get(current_screen, {})
 	var trigger_data = screen_data.get("triggers", {}).get(direction, {})
 
+	if trigger_data.has("options"):
+		var options = trigger_data["options"]
+		$ChoiceBox.show_options(
+			trigger_data.get("message", "Choose an option:"),
+			options,
+			func(option_data):
+				# Show the selected option’s message
+				if option_data.has("message"):
+					$DialogBox.show_message(option_data["message"])
+				# (Future: handle unlocks, flags, etc.)
+		)
+		return
+
 	if trigger_data.has("message"):
 		$DialogBox.show_message(trigger_data["message"])
 
 	if trigger_data.has("next_screen"):
 		await get_tree().create_timer(1.5).timeout
+	
+		$ChoiceBox.hide()
 		load_screen(trigger_data["next_screen"])
