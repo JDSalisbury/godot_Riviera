@@ -2,6 +2,7 @@ extends Control
 
 var screens = {} # Loaded from screens.json
 var current_screen = "start" # Initial screen
+var screen_unlocks = {} # Tracks unlocked directions for screens
 
 # Load and connect buttons on ready
 func _ready():
@@ -28,6 +29,11 @@ func connect_trigger_buttons():
 	$TriggerButtons/UpButton.pressed.connect(trigger_up)
 	$TriggerButtons/InspectButton.pressed.connect(trigger_inspect)
 
+func is_unlocked(direction: String) -> bool:
+	if not screen_unlocks.has(current_screen):
+		return false
+	return direction in screen_unlocks[current_screen]
+
 # Load the given screen and update UI
 func load_screen(screen_name: String):
 	if not screens.has(screen_name):
@@ -42,16 +48,25 @@ func load_screen(screen_name: String):
 	$Background.texture = load(data["background"])
 
 	# Enable/disable trigger buttons
-	$TriggerButtons/LeftButton.visible = data["triggers"].has("left")
-	$TriggerButtons/RightButton.visible = data["triggers"].has("right")
-	$TriggerButtons/UpButton.visible = data["triggers"].has("up")
-	$TriggerButtons/InspectButton.visible = data["triggers"].has("inspect")
+	# Enable triggers that are in the data or were unlocked by choices
+	$TriggerButtons/LeftButton.visible = screens[current_screen]["triggers"].has("left") or is_unlocked("left")
+	$TriggerButtons/RightButton.visible = screens[current_screen]["triggers"].has("right") or is_unlocked("right")
+	$TriggerButtons/UpButton.visible = screens[current_screen]["triggers"].has("up") or is_unlocked("up")
+	$TriggerButtons/InspectButton.visible = screens[current_screen]["triggers"].has("inspect")
+
 
 # Trigger handlers
 func trigger_left(): handle_trigger("left")
 func trigger_right(): handle_trigger("right")
 func trigger_up(): handle_trigger("up")
 func trigger_inspect(): handle_trigger("inspect")
+
+func unlock_direction(screen: String, direction: String):
+	if not screen_unlocks.has(screen):
+		screen_unlocks[screen] = []
+	if direction not in screen_unlocks[screen]:
+		screen_unlocks[screen].append(direction)
+
 
 # Unified trigger handler
 func handle_trigger(direction: String):
@@ -67,7 +82,12 @@ func handle_trigger(direction: String):
 				# Show the selected option’s message
 				if option_data.has("message"):
 					$DialogBox.show_message(option_data["message"])
-				# (Future: handle unlocks, flags, etc.)
+
+				if option_data.has("unlocks_direction"):
+					var dir = option_data["unlocks_direction"]
+					unlock_direction(current_screen, dir)
+					load_screen(current_screen)  # Reload to refresh button visibility
+
 		)
 		return
 
