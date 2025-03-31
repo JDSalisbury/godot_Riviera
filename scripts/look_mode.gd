@@ -34,6 +34,18 @@ func is_unlocked(direction: String) -> bool:
 		return false
 	return direction in screen_unlocks[current_screen]
 
+
+func is_trigger_visible(dir: String) -> bool:
+	var trigger_data = screens[current_screen]["triggers"].get(dir, null)
+	if trigger_data == null:
+		return is_unlocked(dir)  # Not defined? Only show if unlocked
+
+	if trigger_data.has("hidden") and trigger_data["hidden"]:
+		return is_unlocked(dir)  # Hidden? Show only if unlocked
+
+	return true  # Not hidden and exists
+
+
 # Load the given screen and update UI
 func load_screen(screen_name: String):
 	if not screens.has(screen_name):
@@ -49,11 +61,10 @@ func load_screen(screen_name: String):
 
 	# Enable/disable trigger buttons
 	# Enable triggers that are in the data or were unlocked by choices
-	$TriggerButtons/LeftButton.visible = screens[current_screen]["triggers"].has("left") or is_unlocked("left")
-	$TriggerButtons/RightButton.visible = screens[current_screen]["triggers"].has("right") or is_unlocked("right")
-	$TriggerButtons/UpButton.visible = screens[current_screen]["triggers"].has("up") or is_unlocked("up")
-	$TriggerButtons/InspectButton.visible = screens[current_screen]["triggers"].has("inspect")
-
+	$TriggerButtons/LeftButton.visible = is_trigger_visible("left")
+	$TriggerButtons/RightButton.visible = is_trigger_visible("right")
+	$TriggerButtons/UpButton.visible = is_trigger_visible("up")
+	$TriggerButtons/InspectButton.visible = is_trigger_visible("inspect")
 
 # Trigger handlers
 func trigger_left(): handle_trigger("left")

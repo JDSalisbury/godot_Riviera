@@ -28,6 +28,11 @@
 				"message": "You descend the staircase back to the beginning.",
 				"next_screen": "start"
 			},
+			"up": {
+				"message": "A hidden stairway reveals itself above...",
+				"next_screen": "empty_space",
+				"hidden": true
+			},
 			"inspect": {
 				"message": "You see several markings. What will you examine?",
 				"options": [
@@ -41,6 +46,18 @@
 						"message": "They're written in a lost celestial script."
 					}
 				]
+			}
+		}
+	},
+	"empty_space": {
+		"background": "res://assets/backgrounds/empty_space.png",
+		"triggers": {
+			"left": {
+				"message": "You quietly return to the previous platform.",
+				"next_screen": "start"
+			},
+			"inspect": {
+				"message": "Strange glyphs pulse across the walls..."
 			}
 		}
 	}

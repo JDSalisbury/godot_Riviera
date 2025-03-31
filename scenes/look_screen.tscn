@@ -60,4 +60,3 @@ text = "⊕ Inspect"
 [node name="DialogBox" parent="." instance=ExtResource("3_rbmg6")]
 
 [node name="ChoiceBox" parent="." instance=ExtResource("4_m202n")]
-position = Vector2(499, 416)
