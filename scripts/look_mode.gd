@@ -73,17 +73,27 @@ func handle_trigger(direction: String):
 			trigger_data.get("message", "Choose an option:"),
 			options,
 			func(option_data):
-				# Show the selected option’s message
+				var cost = option_data.get("tp_cost", 0)
+
+				if GameState.trigger_points < cost:
+					$DialogBox.show_message("Not enough TP to do that.")
+					return
+
+				# Deduct TP and (eventually) update TP bar
+				GameState.trigger_points -= cost
+
+				# Show the option's message
 				if option_data.has("message"):
 					$DialogBox.show_message(option_data["message"])
 
-				# Unlock directions if needed
+				# Unlock a direction if specified
 				if option_data.has("unlocks_direction"):
 					var dir = option_data["unlocks_direction"]
 					GameState.unlock_direction(current_screen, dir)
-					load_screen(current_screen)  # Refresh to show new direction
+					load_screen(current_screen)
 		)
 		return
+
 
 	if trigger_data.has("message"):
 		$DialogBox.show_message(trigger_data["message"])

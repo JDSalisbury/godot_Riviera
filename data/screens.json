@@ -11,7 +11,8 @@
 				"options": [
 					{
 						"label": "Inspect the crystal symbol",
-						"message": "It pulses faintly with heat."
+						"message": "It pulses faintly with heat.",
+						"tp_cost": 2
 					},
 					{
 						"label": "Inspect the ancient runes",

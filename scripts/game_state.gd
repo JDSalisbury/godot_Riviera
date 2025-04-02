@@ -1,6 +1,6 @@
 extends Node
 
-# Global state
+# Global TP system
 var trigger_points: int = 10
 var max_trigger_points: int = 20
 
