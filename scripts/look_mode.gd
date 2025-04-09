@@ -8,6 +8,17 @@ func _ready():
 	load_screen_data()
 	connect_trigger_buttons()
 	load_screen(current_screen)
+	
+	
+func fade_to_black(callback: Callable):
+	var fade = $ScreenFade
+	fade.show()
+	fade.color.a = 0.0
+	var tween = create_tween()
+	tween.tween_property(fade, "color:a", 1.0, 0.4)
+	tween.tween_callback(callback)
+	tween.tween_property(fade, "color:a", 0.0, 0.4)
+	tween.tween_callback(func(): fade.hide())
 
 func update_tp_bar():
 	$TPBar.update_tp(GameState.trigger_points, GameState.max_trigger_points)
@@ -108,4 +119,6 @@ func handle_trigger(direction: String):
 	if trigger_data.has("next_screen"):
 		await get_tree().create_timer(1.5).timeout
 		$ChoiceBox.hide()
-		load_screen(trigger_data["next_screen"])
+		fade_to_black(func():
+			load_screen(trigger_data["next_screen"])
+		)

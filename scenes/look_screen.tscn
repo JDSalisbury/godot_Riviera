@@ -124,3 +124,15 @@ grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "TP: 10 / 20"
+
+[node name="ScreenFade" type="ColorRect" parent="."]
+visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(44.8345, 25.7018)
+color = Color(0, 0, 0, 1)
