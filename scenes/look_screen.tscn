@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbhmdadrbi7jp"]
+[gd_scene load_steps=6 format=3 uid="uid://bbhmdadrbi7jp"]
 
 [ext_resource type="Script" path="res://scripts/look_mode.gd" id="1_v67vj"]
 [ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/stairway.png" id="2_uduft"]
 [ext_resource type="PackedScene" uid="uid://bgcd6ws0ujfge" path="res://ui/dialog_box.tscn" id="3_rbmg6"]
 [ext_resource type="PackedScene" uid="uid://dmpjsmvn5molj" path="res://ui/choice_box.tscn" id="4_m202n"]
+
+[sub_resource type="GDScript" id="GDScript_mj44x"]
+script/source = "extends Control
+
+@onready var bar = $Bar
+@onready var label = $TPLabel
+
+func update_tp(current: int, max_int: int):
+	bar.max_value = max_int
+	bar.value = current
+	label.text = \"TP: %d / %d\" % [current, max_int]
+"
 
 [node name="LookScreen" type="Control"]
 layout_mode = 3
@@ -60,3 +72,55 @@ text = "⊕ Inspect"
 [node name="DialogBox" parent="." instance=ExtResource("3_rbmg6")]
 
 [node name="ChoiceBox" parent="." instance=ExtResource("4_m202n")]
+
+[node name="TPBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -2.0
+offset_right = -110.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+script = SubResource("GDScript_mj44x")
+
+[node name="Bar" type="ProgressBar" parent="TPBar"]
+top_level = true
+z_index = 5
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -209.0
+offset_top = -37.0
+offset_right = -9.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+max_value = 20.0
+value = 10.0
+show_percentage = false
+
+[node name="TPLabel" type="Label" parent="TPBar"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -33.0
+offset_right = -17.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "TP: 10 / 20"

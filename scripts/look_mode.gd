@@ -9,6 +9,10 @@ func _ready():
 	connect_trigger_buttons()
 	load_screen(current_screen)
 
+func update_tp_bar():
+	$TPBar.update_tp(GameState.trigger_points, GameState.max_trigger_points)
+
+
 # Load screen data from JSON file
 func load_screen_data():
 	var file = FileAccess.open("res://data/screens.json", FileAccess.READ)
@@ -50,6 +54,8 @@ func load_screen(screen_name: String):
 	# Update background
 	$Background.texture = load(data["background"])
 
+	update_tp_bar()
+
 	# Enable/disable trigger buttons
 	$TriggerButtons/LeftButton.visible = is_trigger_visible("left")
 	$TriggerButtons/RightButton.visible = is_trigger_visible("right")
@@ -81,7 +87,8 @@ func handle_trigger(direction: String):
 
 				# Deduct TP and (eventually) update TP bar
 				GameState.trigger_points -= cost
-
+				update_tp_bar()
+				
 				# Show the option's message
 				if option_data.has("message"):
 					$DialogBox.show_message(option_data["message"])
