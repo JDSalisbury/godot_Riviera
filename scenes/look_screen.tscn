@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bbhmdadrbi7jp"]
+[gd_scene load_steps=7 format=3 uid="uid://bbhmdadrbi7jp"]
 
 [ext_resource type="Script" path="res://scripts/look_mode.gd" id="1_v67vj"]
 [ext_resource type="Texture2D" uid="uid://ckkx5408p4qp4" path="res://assets/backgrounds/stairway.png" id="2_uduft"]
 [ext_resource type="PackedScene" uid="uid://bgcd6ws0ujfge" path="res://ui/dialog_box.tscn" id="3_rbmg6"]
 [ext_resource type="PackedScene" uid="uid://dmpjsmvn5molj" path="res://ui/choice_box.tscn" id="4_m202n"]
+[ext_resource type="PackedScene" uid="uid://bfvari6v3chjb" path="res://scenes/inventory.tscn" id="5_fiuwj"]
 
 [sub_resource type="GDScript" id="GDScript_mj44x"]
 script/source = "extends Control
@@ -136,3 +137,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(44.8345, 25.7018)
 color = Color(0, 0, 0, 1)
+
+[node name="InventoryPopup" parent="." instance=ExtResource("5_fiuwj")]
+visible = false
+layout_mode = 1

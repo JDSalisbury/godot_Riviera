@@ -7,6 +7,14 @@ func _ready():
 	load_screen_data()
 	connect_trigger_buttons()
 	load_screen(current_screen)
+	
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_inventory"):
+		var inventory = $InventoryPopup
+		if inventory.visible:
+			inventory.hide()
+		else:
+			inventory.show_inventory()
 
 func fade_to_black(callback: Callable):
 	var fade = $ScreenFade
