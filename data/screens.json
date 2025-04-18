@@ -58,7 +58,26 @@
 				"next_screen": "start"
 			},
 			"inspect": {
-				"message": "Strange glyphs pulse across the walls..."
+				"message": "You see several markings. What will you examine?",
+				"options": [
+					{
+						"label": "Touch the glowing shard",
+						"message": "It pulses with heat and then dissolves into light.",
+						"tp_cost": 2,
+						"once": true,
+						"grants_tp": 3,
+						"unlocks_direction": "up",
+						"grants_item": {
+							"id": "crystal_shard",
+							"type": "key"
+						},
+						"next_screen": "hidden_chamber"
+					},
+					{
+						"label": "Inspect the runes",
+						"message": "They're written in a lost celestial script."
+					}
+				]
 			}
 		}
 	}
