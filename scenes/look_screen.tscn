@@ -139,5 +139,11 @@ scale = Vector2(44.8345, 25.7018)
 color = Color(0, 0, 0, 1)
 
 [node name="InventoryPopup" parent="." instance=ExtResource("5_fiuwj")]
-visible = false
+clip_contents = true
+custom_minimum_size = Vector2(500, 1025)
 layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2

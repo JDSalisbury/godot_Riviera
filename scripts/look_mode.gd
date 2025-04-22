@@ -10,11 +10,9 @@ func _ready():
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_inventory"):
-		var inventory = $InventoryPopup
-		if inventory.visible:
-			inventory.hide()
-		else:
-			inventory.show_inventory()
+		print("PRessing I")
+		$InventoryPopup.toggle()
+
 
 func fade_to_black(callback: Callable):
 	var fade = $ScreenFade
