@@ -10,12 +10,9 @@ func _ready():
 	hide()
 
 func toggle():
-	print("Attempting to Toggle")
 	if visible:
-		print("visible, should close")
 		_on_Close_pressed()
 	else:
-		print("not visible, should open")
 		show_inventory()
 
 func _clear_container(container: Node):
@@ -23,7 +20,6 @@ func _clear_container(container: Node):
 		child.queue_free()
 
 func show_inventory():
-	print(">> show_inventory called")
 
 	_clear_container(key_tab)
 	_clear_container(battle_tab)
