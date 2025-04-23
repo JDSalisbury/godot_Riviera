@@ -40,7 +40,15 @@ func connect_trigger_buttons():
 	$TriggerButtons/LeftButton.pressed.connect(trigger_left)
 	$TriggerButtons/RightButton.pressed.connect(trigger_right)
 	$TriggerButtons/UpButton.pressed.connect(trigger_up)
+	$TriggerButtons/DownButton.pressed.connect(trigger_down)
 	$TriggerButtons/InspectButton.pressed.connect(trigger_inspect)
+	
+func set_direction_buttons_visible(visible: bool):
+	$TriggerButtons/LeftButton.visible = visible and is_trigger_visible("left")
+	$TriggerButtons/RightButton.visible = visible and is_trigger_visible("right")
+	$TriggerButtons/UpButton.visible = visible and is_trigger_visible("up")
+	$TriggerButtons/DownButton.visible = visible and is_trigger_visible("down")
+
 
 func is_trigger_visible(dir: String) -> bool:
 	var trigger_data = screens[current_screen]["triggers"].get(dir, null)
@@ -53,6 +61,8 @@ func is_trigger_visible(dir: String) -> bool:
 	return true
 
 func load_screen(screen_name: String):
+	$DialogBox.clear()
+
 	if not screens.has(screen_name):
 		push_error("Unknown screen: " + screen_name)
 		return
@@ -61,16 +71,20 @@ func load_screen(screen_name: String):
 	var data = screens[screen_name]
 
 	$Background.texture = load(data["background"])
+	
 	update_tp_bar()
-
+	set_direction_buttons_visible(true)
+	
 	$TriggerButtons/LeftButton.visible = is_trigger_visible("left")
 	$TriggerButtons/RightButton.visible = is_trigger_visible("right")
 	$TriggerButtons/UpButton.visible = is_trigger_visible("up")
+	$TriggerButtons/DownButton.visible = is_trigger_visible("down")
 	$TriggerButtons/InspectButton.visible = is_trigger_visible("inspect")
 
 func trigger_left(): handle_trigger("left")
 func trigger_right(): handle_trigger("right")
 func trigger_up(): handle_trigger("up")
+func trigger_down(): handle_trigger("down")
 func trigger_inspect(): handle_trigger("inspect")
 
 func handle_trigger(direction: String):
@@ -78,6 +92,8 @@ func handle_trigger(direction: String):
 	var trigger_data = screen_data.get("triggers", {}).get(direction, {})
 
 	if trigger_data.has("options"):
+		set_direction_buttons_visible(false)
+
 		var options = trigger_data["options"]
 		$ChoiceBox.show_options(
 			trigger_data.get("message", "Choose an option:"),
@@ -131,11 +147,13 @@ func handle_trigger(direction: String):
 				# Trigger encounter (placeholder)
 				if option_data.has("starts_encounter"):
 					print("Start encounter:", option_data["starts_encounter"])
+				set_direction_buttons_visible(true)
 
 		)
 		return
 
 	if trigger_data.has("message"):
+		$DialogBox.clear()
 		$DialogBox.show_message(trigger_data["message"])
 
 	if trigger_data.has("next_screen"):

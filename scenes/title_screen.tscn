@@ -22,9 +22,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.731127, 0.73139)
+scale = Vector2(0.763297, 0.763588)
 texture = ExtResource("2_u8eoj")
-expand_mode = 1
 
 [node name="MenuBox" type="VBoxContainer" parent="."]
 top_level = true

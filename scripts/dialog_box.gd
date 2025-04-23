@@ -6,3 +6,8 @@ extends CanvasLayer
 func show_message(text: String):
 	label.text = text
 	anim.play("fade_in_out")
+
+
+func clear():
+	label.text = ""
+	#hide()

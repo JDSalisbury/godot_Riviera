@@ -32,8 +32,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -64,6 +62,11 @@ text = " → Right "
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = " ↑ Up"
+
+[node name="DownButton" type="Button" parent="TriggerButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = " ↓ Down"
 
 [node name="InspectButton" type="Button" parent="TriggerButtons"]
 layout_mode = 2
