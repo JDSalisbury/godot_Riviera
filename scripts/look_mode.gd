@@ -11,6 +11,20 @@ func _ready():
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_inventory"):
 		$InventoryPopup.toggle()
+		
+	if $ChoiceBox.visible:
+		return  # Block movement while choosing
+
+	if event.is_action_pressed("ui_left"):
+		trigger_left()
+	elif event.is_action_pressed("ui_right"):
+		trigger_right()
+	elif event.is_action_pressed("ui_up"):
+		trigger_up()
+	elif event.is_action_pressed("ui_down"):
+		trigger_down()
+	elif event.is_action_pressed("ui_inspect"):
+		trigger_inspect()
 
 
 func fade_to_black(callback: Callable):
