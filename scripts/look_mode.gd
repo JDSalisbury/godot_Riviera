@@ -2,6 +2,7 @@ extends Control
 
 var screens = {}
 var current_screen = "start"
+var option_interactions := {}
 
 func _ready():
 	load_screen_data()
@@ -83,12 +84,12 @@ func load_screen(screen_name: String):
 
 	current_screen = screen_name
 	var data = screens[screen_name]
+	option_interactions.clear()
 
 	$Background.texture = load(data["background"])
 	
 	update_tp_bar()
 	set_direction_buttons_visible(true)
-	
 	$TriggerButtons/LeftButton.visible = is_trigger_visible("left")
 	$TriggerButtons/RightButton.visible = is_trigger_visible("right")
 	$TriggerButtons/UpButton.visible = is_trigger_visible("up")
@@ -132,8 +133,46 @@ func handle_trigger(direction: String):
 					GameState.mark_option_used(current_screen, option_data.label)
 
 				# Show message
-				if option_data.has("message"):
+			# Count how many times this option has been used
+				var label = option_data["label"]
+				if not option_interactions.has(label):
+					option_interactions[label] = 0
+				option_interactions[label] += 1
+				var count = option_interactions[label]
+
+				# Show alternate message based on count
+				var alt_message = null
+				var alt_data = null
+				if option_data.has("additional_message"):
+					alt_data = option_data["additional_message"].get(str(count), null)
+					if alt_data and alt_data.has("message"):
+						alt_message = alt_data["message"]
+
+
+				# Optional override of TP cost or behavior
+				if alt_data and alt_data.has("tp_cost"):
+					var override_cost = int(alt_data["tp_cost"])
+					if GameState.trigger_points < override_cost:
+						$DialogBox.show_message("Not enough TP to do that.")
+						return
+					GameState.trigger_points -= override_cost
+					update_tp_bar()
+
+				# Handle possible next_screen override
+				if alt_data and alt_data.has("next_screen"):
+					await get_tree().create_timer(1.5).timeout
+					$ChoiceBox.hide()
+					fade_to_black(func():
+						load_screen(alt_data["next_screen"])
+					)
+					return
+
+				# Show the message
+				if alt_message:
+					$DialogBox.show_message(alt_message)
+				elif option_data.has("message"):
 					$DialogBox.show_message(option_data["message"])
+
 
 				# Grant TP
 				if option_data.has("grants_tp"):
@@ -143,7 +182,6 @@ func handle_trigger(direction: String):
 				# Unlock direction
 				if option_data.has("unlocks_direction"):
 					GameState.unlock_direction(current_screen, option_data["unlocks_direction"])
-					load_screen(current_screen)
 
 				# Grant item
 				if option_data.has("grants_item"):
@@ -167,7 +205,6 @@ func handle_trigger(direction: String):
 		return
 
 	if trigger_data.has("message"):
-		$DialogBox.clear()
 		$DialogBox.show_message(trigger_data["message"])
 
 	if trigger_data.has("next_screen"):
