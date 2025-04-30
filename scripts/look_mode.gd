@@ -5,9 +5,7 @@ var current_screen = "start"
 var option_interactions := {}
 
 func _ready():
-	var save_data = SaveSystem.load_game()
-	GameState.apply_loaded_data(save_data)
-	
+
 	load_screen_data()
 	connect_trigger_buttons()
 	load_screen(GameState.current_screen)

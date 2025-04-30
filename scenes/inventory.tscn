@@ -36,8 +36,8 @@ metadata/_tab_index = 1
 
 [node name="SaveButton" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 349.0
-offset_right = 443.0
+offset_left = 344.0
+offset_right = 438.0
 offset_bottom = 31.0
 scale = Vector2(1, 0.995721)
 text = "Save Game"

@@ -65,3 +65,17 @@ func apply_loaded_data(data: Dictionary) -> void:
 	current_screen = data.get("current_screen", "start")
 
 	print("✅ GameState updated from save.")
+
+
+func reset_game():
+	trigger_points = 10
+	max_trigger_points = 20
+
+	story_flags.clear()
+	screen_unlocks.clear()
+	used_options.clear()
+	inventory = {
+		"key": [],
+		"battle": []
+	}
+	current_screen = "start"
