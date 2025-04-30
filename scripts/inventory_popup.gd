@@ -52,3 +52,9 @@ func _on_Close_pressed():
 	tween = create_tween()
 	tween.tween_property(panel, "position", offscreen_pos, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tween.tween_callback(func(): hide())
+
+
+func _on_Save_pressed():
+	SaveSystem.save_game()
+	print("💾 Game saved!")
+	DialogSystem.show_message("Game saved successfully!")

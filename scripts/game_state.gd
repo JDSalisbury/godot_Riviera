@@ -4,6 +4,9 @@ extends Node
 var trigger_points: int = 10
 var max_trigger_points: int = 20
 
+
+var current_screen := "start"
+
 var story_flags: Dictionary = {}
 var screen_unlocks: Dictionary = {}
 var used_options := {}
@@ -47,3 +50,18 @@ func add_item(id: String, item_type: String):
 	if id not in inventory[item_type]:
 		inventory[item_type].append(id)
 		print("Added item:", id, "to", item_type)
+		
+func apply_loaded_data(data: Dictionary) -> void:
+	if data.is_empty():
+		print("No save data to load.")
+		return
+
+	trigger_points = data.get("trigger_points", trigger_points)
+	max_trigger_points = data.get("max_trigger_points", max_trigger_points)
+	story_flags = data.get("story_flags", {})
+	screen_unlocks = data.get("screen_unlocks", {})
+	used_options = data.get("used_options", {})
+	inventory = data.get("inventory", {"key": [], "battle": []})
+	current_screen = data.get("current_screen", "start")
+
+	print("✅ GameState updated from save.")

@@ -34,6 +34,14 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
+[node name="SaveButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 349.0
+offset_right = 443.0
+offset_bottom = 31.0
+scale = Vector2(1, 0.995721)
+text = "Save Game"
+
 [node name="Close" type="Button" parent="Panel"]
 layout_mode = 1
 anchors_preset = 1
@@ -44,4 +52,5 @@ offset_bottom = 31.0
 grow_horizontal = 0
 text = "Close"
 
+[connection signal="pressed" from="Panel/SaveButton" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="Panel/Close" to="." method="_on_Close_pressed"]

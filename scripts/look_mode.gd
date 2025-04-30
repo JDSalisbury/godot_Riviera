@@ -5,9 +5,13 @@ var current_screen = "start"
 var option_interactions := {}
 
 func _ready():
+	var save_data = SaveSystem.load_game()
+	GameState.apply_loaded_data(save_data)
+	
 	load_screen_data()
 	connect_trigger_buttons()
-	load_screen(current_screen)
+	load_screen(GameState.current_screen)
+
 	
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_inventory"):
@@ -83,6 +87,8 @@ func load_screen(screen_name: String):
 		return
 
 	current_screen = screen_name
+	GameState.current_screen = screen_name  # 🔧 Sync with GameState
+
 	var data = screens[screen_name]
 	option_interactions.clear()
 
