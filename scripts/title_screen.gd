@@ -16,7 +16,7 @@ func _on_continue_pressed():
 	if FileAccess.file_exists(SaveSystem.SAVE_PATH):
 		print("Loading saved game...")
 		var data = SaveSystem.load_game()
-		GameState.apply_loaded_data(data)
+		GameState.from_dict(data)
 		get_tree().change_scene_to_file("res://scenes/look_screen.tscn")
 	else:
 		print("No saved game found.")

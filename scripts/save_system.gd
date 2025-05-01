@@ -3,16 +3,7 @@ extends Node
 const SAVE_PATH := "user://save_game.json"
 
 func save_game():
-	var data := {
-		"trigger_points": GameState.trigger_points,
-		"max_trigger_points": GameState.max_trigger_points,
-		"story_flags": GameState.story_flags,
-		"screen_unlocks": GameState.screen_unlocks,
-		"used_options": GameState.used_options,
-		"inventory": GameState.inventory,
-		"current_screen": GameState.current_screen,
-		"key_item_unlocks_shown": GameState.key_item_unlocks_shown,
-	}
+	var data = GameState.to_dict()
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file:
@@ -34,6 +25,7 @@ func load_game() -> Dictionary:
 
 		var data = JSON.parse_string(content)
 		if typeof(data) == TYPE_DICTIONARY:
+			GameState.from_dict(data)
 			print("✅ Game loaded.")
 			return data
 		else:

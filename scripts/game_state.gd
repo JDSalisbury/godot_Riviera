@@ -1,23 +1,47 @@
 extends Node
 
-# Global TP system
-var trigger_points: int = 10
-var max_trigger_points: int = 20
+# --- Game State Variables ---
+var trigger_points: int
+var max_trigger_points: int
+var current_screen: String
+var story_flags: Dictionary
+var screen_unlocks: Dictionary
+var used_options: Dictionary
+var inventory: Dictionary
+var key_item_unlocks_shown: Dictionary
 
+# --- Default State Source of Truth ---
+func get_default_state() -> Dictionary:
+	return {
+		"trigger_points": 10,
+		"max_trigger_points": 20,
+		"current_screen": "start",
+		"story_flags": {},
+		"screen_unlocks": {},
+		"used_options": {},
+		"inventory": {
+			"key": [],
+			"battle": []
+		},
+		"key_item_unlocks_shown": {}
+	}
 
-var current_screen := "start"
+# --- Save Helpers ---
+func to_dict() -> Dictionary:
+	var state = {}
+	for key in get_default_state().keys():
+		state[key] = self.get(key)
+	return state
 
-var story_flags: Dictionary = {}
-var screen_unlocks: Dictionary = {}
-var used_options := {}
+func from_dict(data: Dictionary) -> void:
+	var defaults = get_default_state()
+	for key in defaults.keys():
+		self.set(key, data.get(key, defaults[key]))
 
-var inventory := {
-	"key": [],
-	"battle": []
-}
+func reset_game():
+	from_dict(get_default_state())
 
-var key_item_unlocks_shown := {}
-
+# --- Game Logic ---
 func mark_key_item_unlock(screen: String, direction: String):
 	if not key_item_unlocks_shown.has(screen):
 		key_item_unlocks_shown[screen] = []
@@ -50,9 +74,6 @@ func unlock_direction(screen: String, direction: String):
 func is_unlocked(screen: String, direction: String) -> bool:
 	return direction in screen_unlocks.get(screen, [])
 
-
-
-
 func add_item(id: String, item_type: String):
 	if not inventory.has(item_type):
 		push_error("Unknown item type: %s" % item_type)
@@ -61,34 +82,3 @@ func add_item(id: String, item_type: String):
 	if id not in inventory[item_type]:
 		inventory[item_type].append(id)
 		print("Added item:", id, "to", item_type)
-		
-func apply_loaded_data(data: Dictionary) -> void:
-	if data.is_empty():
-		print("No save data to load.")
-		return
-
-	trigger_points = data.get("trigger_points", trigger_points)
-	max_trigger_points = data.get("max_trigger_points", max_trigger_points)
-	story_flags = data.get("story_flags", {})
-	screen_unlocks = data.get("screen_unlocks", {})
-	used_options = data.get("used_options", {})
-	inventory = data.get("inventory", {"key": [], "battle": []})
-	current_screen = data.get("current_screen", "start")
-	key_item_unlocks_shown = data.get("key_item_unlocks_shown", {})
-	
-	print("✅ GameState updated from save.")
-
-
-func reset_game():
-	trigger_points = 10
-	max_trigger_points = 20
-
-	story_flags.clear()
-	screen_unlocks.clear()
-	used_options.clear()
-	key_item_unlocks_shown.clear()
-	inventory = {
-		"key": [],
-		"battle": []
-	}
-	current_screen = "start"
