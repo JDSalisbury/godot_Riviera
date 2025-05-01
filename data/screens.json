@@ -1,10 +1,20 @@
 {
 	"start": {
 		"background": "res://assets/backgrounds/stairway.png",
+		"key_item_unlocks": {
+			"down": [
+				"crystal_shard",
+				"obsidian_shard"
+			]
+		},
 		"triggers": {
 			"up": {
 				"message": "You ascend to the glowing landing.",
 				"next_screen": "landing"
+			},
+			"down": {
+				"message": "The shards rotate and align in missing slots, a passage opens and pulls you down into it.",
+				"next_screen": "depths"
 			},
 			"inspect": {
 				"message": "You see several markings. What will you examine?",
@@ -20,8 +30,8 @@
 						}
 					},
 					{
-						"label": "Inspect the ancient runes",
-						"message": "They're written in a lost celestial script.",
+						"label": "Inspect the ancient shards",
+						"message": "They're displayed in a strange pattern, their seems to be a few missing...",
 						"additional_message": {
 							"2": {
 								"message": "You feel a strange energy emanating from them."
@@ -124,6 +134,28 @@
 						"label": "Leap into the darkness",
 						"message": "You leap and descend into darkness.",
 						"next_screen": "start"
+					}
+				]
+			}
+		}
+	},
+	"depths": {
+		"background": "res://assets/backgrounds/depths.png",
+		"triggers": {
+			"up": {
+				"message": "You ascend the staircase back to the beginning.",
+				"next_screen": "start"
+			},
+			"inspect": {
+				"message": "You see several markings. What will you examine?",
+				"options": [
+					{
+						"label": "Inspect the crystal symbol",
+						"message": "It pulses faintly with heat."
+					},
+					{
+						"label": "Inspect the ancient runes",
+						"message": "They're written in a lost celestial script."
 					}
 				]
 			}

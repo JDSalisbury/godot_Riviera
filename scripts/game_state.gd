@@ -16,6 +16,17 @@ var inventory := {
 	"battle": []
 }
 
+var key_item_unlocks_shown := {}
+
+func mark_key_item_unlock(screen: String, direction: String):
+	if not key_item_unlocks_shown.has(screen):
+		key_item_unlocks_shown[screen] = []
+	if direction not in key_item_unlocks_shown[screen]:
+		key_item_unlocks_shown[screen].append(direction)
+
+func has_shown_key_item_unlock(screen: String, direction: String) -> bool:
+	return key_item_unlocks_shown.has(screen) and direction in key_item_unlocks_shown[screen]
+
 func has_used_option(screen: String, label: String) -> bool:
 	return used_options.has(screen) and label in used_options[screen]
 
@@ -63,7 +74,8 @@ func apply_loaded_data(data: Dictionary) -> void:
 	used_options = data.get("used_options", {})
 	inventory = data.get("inventory", {"key": [], "battle": []})
 	current_screen = data.get("current_screen", "start")
-
+	key_item_unlocks_shown = data.get("key_item_unlocks_shown", {})
+	
 	print("✅ GameState updated from save.")
 
 
@@ -74,6 +86,7 @@ func reset_game():
 	story_flags.clear()
 	screen_unlocks.clear()
 	used_options.clear()
+	key_item_unlocks_shown.clear()
 	inventory = {
 		"key": [],
 		"battle": []

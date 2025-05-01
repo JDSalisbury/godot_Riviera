@@ -10,7 +10,8 @@ func save_game():
 		"screen_unlocks": GameState.screen_unlocks,
 		"used_options": GameState.used_options,
 		"inventory": GameState.inventory,
-		"current_screen": GameState.current_screen
+		"current_screen": GameState.current_screen,
+		"key_item_unlocks_shown": GameState.key_item_unlocks_shown,
 	}
 
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)

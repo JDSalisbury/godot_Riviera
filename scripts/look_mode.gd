@@ -69,6 +69,23 @@ func set_direction_buttons_visible(visible: bool):
 
 func is_trigger_visible(dir: String) -> bool:
 	var trigger_data = screens[current_screen]["triggers"].get(dir, null)
+	var item_unlocks = screens[current_screen].get("key_item_unlocks", {})
+	var has_all_items := true
+
+	if item_unlocks.has(dir):
+		var required_items = item_unlocks[dir]
+		for item in required_items:
+			if item not in GameState.inventory["key"]:
+				has_all_items = false
+				break
+
+		if has_all_items and not GameState.has_shown_key_item_unlock(current_screen, dir):
+			GameState.mark_key_item_unlock(current_screen, dir)
+			DialogSystem.show_message("You feel something shift...")
+
+		if not has_all_items:
+			return false  # Don't show if items aren't met
+
 	if trigger_data == null:
 		return GameState.is_unlocked(current_screen, dir)
 
@@ -76,6 +93,7 @@ func is_trigger_visible(dir: String) -> bool:
 		return GameState.is_unlocked(current_screen, dir)
 
 	return true
+
 
 func load_screen(screen_name: String):
 	$DialogBox.clear()
